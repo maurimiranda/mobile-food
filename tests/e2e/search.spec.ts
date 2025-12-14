@@ -1,6 +1,7 @@
 import { PermitStatus } from "@/types/enums";
-import { expect, test } from "./setup";
+import { expect, test } from "@playwright/test";
 import permits from "../fixtures/permits.json";
+import "./setup";
 
 test.describe("Search", () => {
   test.beforeEach(async ({ page }) => {

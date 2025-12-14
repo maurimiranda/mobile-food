@@ -4,7 +4,7 @@ A web application to explore San Francisco's mobile food facility permits. Built
 
 ## Problem Description
 
-San Francisco has hundreds of mobile food vendors (food trucks, push carts) operating across the city. The city maintains a public dataset with permit information, but the raw data isn't easily explorable. This application provides an intuitive interface to:
+This application provides an intuitive interface to:
 
 1. **Search vendors** by name or the food they serve
 2. **Search by location** using partial street names (e.g., "SAN" finds vendors on "SANSOME ST")
@@ -17,11 +17,11 @@ I built an interactive map-based interface rather than a traditional table/list 
 
 ### Key Features
 
-- **Interactive Map**: MapLibre-powered map showing all vendor locations with color-coded status markers
+- **Interactive Map**: web map showing all vendor locations with color-coded status markers
 - **Live Search**: Real-time search across vendor names, addresses, and food items
 - **Location Search**: Click anywhere on the map to find the 5 nearest facilities
 - **Filtering**: Filter by permit status (Approved, Requested, Expired, Suspend, Issued) and facility type (Truck, Cart, Other)
-- **Visual Legend**: Interactive legend that doubles as filter toggles
+- **Visual Legend**: Interactive legend with filtering capabilities
 
 ## Tech Stack
 
@@ -36,8 +36,9 @@ I built an interactive map-based interface rather than a traditional table/list 
 
 ### Framework: Next.js + React
 
-- **Why Next.js**: Server-side rendering for the initial data fetch improves perceived performance. The app fetches permit data on the server before sending HTML to the client, avoiding a loading spinner on first paint.
+- **Why Next.js**: Provides a solid foundation with built-in routing, optimized builds, and excellent developer experience.
 - **Why React 19**: Latest stable version with improved performance characteristics.
+- **Client-side data fetching**: Data is fetched in the browser to enable Playwright route interception for E2E testing with fixture data.
 
 ### Mapping: MapLibre + react-map-gl
 
@@ -61,9 +62,7 @@ I built an interactive map-based interface rather than a traditional table/list 
 
 - Ensures consistent development environment and simplifies deployment. The same container can run locally or in production.
 
-## Critique
-
-### What I Would Do Differently With More Time
+## What I Would Do Differently With More Time
 
 - **Backend API**: Currently fetching directly from SF Gov's API on every page load. A proper backend would:
 
@@ -75,26 +74,27 @@ I built an interactive map-based interface rather than a traditional table/list 
 
 - **Testing**:
 
-  -- Add more tests
-  -- Add more browsers to Playwright configiuration for cross-browser compatibility
-  -- Maybe add unit tests for critical components? Not sure
+  - Add more browsers to Playwright configuration for cross-browser compatibility
+  - Consider unit tests for critical utility functions
+  - Run into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data
 
 ## How to Run Locally
 
 ### Prerequisites
 
 - Docker and Docker Compose installed
-- MapTiler API key (free tier available)
+- MapTiler API key ([free tier available](https://docs.maptiler.com/cloud/api/authentication-key/#get-a-testing-key))
 
 1. Build
 
 ```bash
-make build
+docker compose build
 ```
 
 2. Create a `.env` file in the project root with the following content:
 
 ```
+NEXT_PUBLIC_DATA_URL=https://data.sfgov.org/resource/rqzj-sfat.json
 NEXT_PUBLIC_MAPTILER_KEY=your_maptiler_api_key_here
 ```
 
@@ -104,7 +104,7 @@ NEXT_PUBLIC_MAPTILER_KEY=your_maptiler_api_key_here
 docker compose up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ### Testing
 
@@ -113,11 +113,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 2. Run E2E Tests
 
 ```bash
-make test
-```
-
-### Linting
-
-```bash
-make lint
+docker compose exec app npm test
 ```

@@ -11,6 +11,4 @@ services:
       - "host.docker.internal:host-gateway"
     env_file:
       - .env
-    environment:
-      - NEXT_PUBLIC_DATA_URL=https://data.sfgov.org/resource/rqzj-sfat.json
     command: npm run dev

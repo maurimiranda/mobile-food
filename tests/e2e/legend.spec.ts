@@ -1,5 +1,6 @@
 import { FacilityType, PermitStatus } from "@/types/enums";
-import { expect, test } from "./setup";
+import { expect, test } from "@playwright/test";
+import "./setup";
 
 test.describe("Legend", () => {
   test.beforeEach(async ({ page }) => {
