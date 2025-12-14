@@ -98,6 +98,8 @@ export default function SearchBar({ data }: { data: Permit[] }) {
                 })}
               </div>
             </div>
+
+            <h5 className="p-2 text-xs text-black text-center italic">Click a result to fly to its location</h5>
             <ul className="max-h-80 overflow-y-auto" onMouseDown={(e) => e.preventDefault()}>
               {results.map((permit) => {
                 const isSelected = selectedPermits.includes(permit.id);

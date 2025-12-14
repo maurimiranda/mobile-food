@@ -1,7 +1,7 @@
 CONTAINER_NAME=app
 
 build:
-	docker compose build
+	docker compose build --no-cache
 
 install:
 	docker compose run --rm $(CONTAINER_NAME) npm install

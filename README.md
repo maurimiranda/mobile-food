@@ -64,19 +64,21 @@ I built an interactive map-based interface rather than a traditional table/list 
 
 ## What I Would Do Differently With More Time
 
-- **Backend API**: Currently fetching directly from SF Gov's API on every page load. A proper backend would:
+- **Backend API**:
 
-  - Cache the data with periodic refresh
-  - Provide faster response times
-  - Enable more complex queries (spatial queries, fuzzy search)
+  - Currently fetching directly from SF Gov's API on every page load. A proper backend would provide an API with pagination, filtering, and search capabilities.
 
-- **Clustering**: With 400+ markers, the map can feel cluttered at low zoom levels. Marker clustering would improve UX.
+- **UI/UX**:
+
+  - Clustering: With 400+ markers, the map can feel cluttered at low zoom levels. Marker clustering would improve UX.
+  - Mobile Optimization: Further refine the mobile experience for smaller screens.
+  - Accessibility: Improve keyboard navigation and screen reader support.
 
 - **Testing**:
 
-  - Add more browsers to Playwright configuration for cross-browser compatibility
-  - Consider unit tests for critical utility functions
-  - Run into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data
+  - Add more browsers to Playwright configuration for cross-browser compatibility.
+  - Consider unit tests for critical utility functions.
+  - Run into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data.
 
 ## How to Run Locally
 
@@ -88,7 +90,7 @@ I built an interactive map-based interface rather than a traditional table/list 
 1. Build
 
 ```bash
-docker compose build
+make build
 ```
 
 2. Create a `.env` file in the project root with the following content:
@@ -101,7 +103,7 @@ NEXT_PUBLIC_MAPTILER_KEY=your_maptiler_api_key_here
 3. Run Development Server
 
 ```bash
-docker compose up
+make run
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser
@@ -113,5 +115,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser
 2. Run E2E Tests
 
 ```bash
-docker compose exec app npm test
+make test
 ```

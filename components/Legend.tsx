@@ -12,7 +12,7 @@ export default function Legend() {
   return (
     <div
       id="legend"
-      className="absolute bottom-4 left-4 z-10 bg-white text-gray-500 bg-opacity-90 rounded-lg shadow-lg p-4"
+      className="absolute bottom-4 left-4 z-10 bg-white text-gray-500 bg-opacity-90 rounded-lg shadow-lg p-4 md:hidden xl:block"
     >
       {Object.entries(typeIcons).map(([type, Icon]) => (
         <div

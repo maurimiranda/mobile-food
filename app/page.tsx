@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 
 import Legend from "@/components/Legend";
+import Loading from "@/components/Loading";
 import Map from "@/components/Map";
 import SearchBar from "@/components/SearchBar";
 import { FacilityType } from "@/types/enums";
@@ -14,12 +13,12 @@ export default function Home() {
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_DATA_URL!)
       .then((res) => res.json())
-      .then((rawData) => {
+      .then((rawData: ApiPermit[]) => {
         // Parse and transform API data into local Permit objects
         const permits: Permit[] = rawData
           // Filter out permits with invalid coordinates
-          .filter((permit: any) => !(permit.latitude === "0" && permit.longitude === "0"))
-          .map((item: any) => ({
+          .filter((permit) => !(permit.latitude === "0" && permit.longitude === "0"))
+          .map((item) => ({
             id: item.objectid,
             applicant: item.applicant,
             type:
@@ -40,14 +39,14 @@ export default function Home() {
             schedule: item.schedule,
             approved: item.approved ? new Date(item.approved) : undefined,
             received: new Date(item.received),
-            expiration: new Date(item.expiration),
+            expiration: new Date(item.expirationdate),
           }));
         setData(permits);
       });
   }, []);
 
   if (!data.length) {
-    return <div className="flex h-screen items-center justify-center">Loading data...</div>;
+    return <Loading />;
   }
 
   return (
