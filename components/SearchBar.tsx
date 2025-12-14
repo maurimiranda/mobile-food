@@ -31,7 +31,7 @@ export default function SearchBar({ data }: { data: Permit[] }) {
   }, [data, query, statusFilter]);
 
   return (
-    <div className="absolute top-0 left-0 z-10 p-4 w-full max-w-md">
+    <div id="search" className="absolute top-0 left-0 z-10 p-4 w-full max-w-md">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="flex items-center px-3 py-2 border-b border-gray-100">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />

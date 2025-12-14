@@ -4,7 +4,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3200:3000"
+      - "3000:3000"
     volumes:
       - .:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    environment:
+      - NEXT_PUBLIC_DATA_URL=https://data.sfgov.org/resource/rqzj-sfat.json
     command: npm run dev

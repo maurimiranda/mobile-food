@@ -11,3 +11,6 @@ shell:
 
 lint:
 	docker compose run --rm $(CONTAINER_NAME) bash -c "npm run lint && npm run tsc"
+
+test:
+	docker compose exec $(CONTAINER_NAME) npm test

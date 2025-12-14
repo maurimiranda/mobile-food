@@ -50,6 +50,7 @@ export default function Map({ data }: { data: Permit[] }) {
 
   return (
     <ReactMap
+      id="map"
       ref={mapRef}
       initialViewState={{
         latitude: 37.76,
@@ -97,9 +98,9 @@ export default function Map({ data }: { data: Permit[] }) {
                 className={`relative ${isSelected ? "ring-4 ring-blue-500 rounded-full p-2 bg-blue-50 shadow-xl" : ""}`}
               >
                 <Icon
-                  className={`h-8 w-8 ${statusStyles[permit.status as PermitStatus].fill} drop-shadow-lg ${
-                    isFilteredOut ? "opacity-10" : "opacity-100"
-                  }`}
+                  className={`permit-status-${permit.status} facility-type-${permit.type} h-8 w-8 ${
+                    statusStyles[permit.status as PermitStatus].fill
+                  } drop-shadow-lg ${isFilteredOut ? "opacity-10" : "opacity-100"}`}
                 />
               </div>
             </div>

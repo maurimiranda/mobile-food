@@ -10,11 +10,14 @@ export default function Legend() {
   const [typeFilter, setTypeFilter] = useAtom(typeFilterAtom);
 
   return (
-    <div className="absolute bottom-4 left-4 z-10 bg-white text-gray-500 bg-opacity-90 rounded-lg shadow-lg p-4">
+    <div
+      id="legend"
+      className="absolute bottom-4 left-4 z-10 bg-white text-gray-500 bg-opacity-90 rounded-lg shadow-lg p-4"
+    >
       {Object.entries(typeIcons).map(([type, Icon]) => (
         <div
           key={type}
-          className={`flex items-center space-x-2 mb-2 last:mb-0 ${
+          className={`legend-type-item flex items-center space-x-2 mb-2 last:mb-0 ${
             typeFilter.includes(type as FacilityType) ? "opacity-100" : "opacity-40"
           }`}
           onClick={() => {
@@ -34,7 +37,7 @@ export default function Legend() {
       {Object.values(PermitStatus).map((status) => (
         <div
           key={status}
-          className={`flex items-center space-x-2 mb-2 last:mb-0 ${
+          className={`legend-status-item flex items-center space-x-2 mb-2 last:mb-0 ${
             statusFilter.includes(status as PermitStatus) ? "opacity-100" : "opacity-40"
           }`}
           onClick={() => {
