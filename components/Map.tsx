@@ -1,19 +1,29 @@
 "use client";
 
-import { locationSearchAtom, searchPointAtom, selectedPermitsAtom } from "@/store/store";
+import {
+  locationSearchAtom,
+  searchPointAtom,
+  selectedPermitsAtom,
+  statusFilterAtom,
+  typeFilterAtom,
+} from "@/store/store";
 import { statusStyles, typeIcons } from "@/types/defaults";
 import { FacilityType, PermitStatus } from "@/types/enums";
 import bbox from "@turf/bbox";
 import distance from "@turf/distance";
 import { featureCollection, point } from "@turf/helpers";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MapRef, Marker, NavigationControl, Popup, Map as ReactMap } from "react-map-gl/maplibre";
+import StatusBadge from "./StatusBadge";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
 export default function Map({ data }: { data: Permit[] }) {
   const [selectedPermits, setSelectedPermits] = useAtom(selectedPermitsAtom);
   const [locationSearch, setLocationSearch] = useAtom(locationSearchAtom);
   const [searchPoint, setSearchPoint] = useAtom(searchPointAtom);
+  const statusFilter = useAtomValue(statusFilterAtom);
+  const typeFilter = useAtomValue(typeFilterAtom);
 
   const [popup, setPopup] = useState<Permit | null>(null);
 
@@ -24,6 +34,7 @@ export default function Map({ data }: { data: Permit[] }) {
   }, [data]);
 
   useEffect(() => {
+    if (selectedPermits.length === 0) return;
     mapRef.current?.fitBounds(
       bbox(
         featureCollection(
@@ -71,6 +82,9 @@ export default function Map({ data }: { data: Permit[] }) {
       {data.map((permit) => {
         const Icon = typeIcons[permit.type as FacilityType];
         const isSelected = selectedPermits.includes(permit.id);
+        const isFilteredOut =
+          !statusFilter.includes(permit.status) || !typeFilter.includes(permit.type as FacilityType);
+
         return (
           <Marker
             key={permit.id}
@@ -82,7 +96,11 @@ export default function Map({ data }: { data: Permit[] }) {
               <div
                 className={`relative ${isSelected ? "ring-4 ring-blue-500 rounded-full p-2 bg-blue-50 shadow-xl" : ""}`}
               >
-                <Icon className={`h-8 w-8 ${statusStyles[permit.status as PermitStatus].fill} drop-shadow-lg`} />
+                <Icon
+                  className={`h-8 w-8 ${statusStyles[permit.status as PermitStatus].fill} drop-shadow-lg ${
+                    isFilteredOut ? "opacity-10" : "opacity-100"
+                  }`}
+                />
               </div>
             </div>
           </Marker>
@@ -90,22 +108,18 @@ export default function Map({ data }: { data: Permit[] }) {
       })}
 
       {searchPoint && (
-        <Marker longitude={searchPoint.geometry.coordinates[0]} latitude={searchPoint.geometry.coordinates[1]} />
+        <Marker longitude={searchPoint.geometry.coordinates[0]} latitude={searchPoint.geometry.coordinates[1]}>
+          <MapPinIcon className="h-12 w-12 text-blue-500" />
+        </Marker>
       )}
 
       {popup && (
         <Popup longitude={popup.longitude} latitude={popup.latitude} closeButton={false}>
           <div className="text-black">
-            <h2 className="font-bold">{popup.applicant} </h2>
-            <p>{popup.address}</p>
-            <p>{popup.food}</p>
-            <span
-              className={`${statusStyles[popup.status as PermitStatus].bg} ${
-                statusStyles[popup.status as PermitStatus].contrastText
-              } text-xs font-medium px-1.5 py-0.5 rounded`}
-            >
-              {popup.status}
-            </span>
+            <p className="font-medium text-sm text-gray-900">{popup.applicant}</p>
+            <p className="text-xs text-gray-500">{popup.address}</p>
+            <p className="text-xs text-gray-400">{popup.food}</p>
+            <StatusBadge status={popup.status} />
           </div>
         </Popup>
       )}

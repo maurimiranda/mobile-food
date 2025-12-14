@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import Legend from "@/components/Legend";
 import Map from "@/components/Map";
 import SearchBar from "@/components/SearchBar";
 import { FacilityType } from "@/types/enums";
@@ -42,6 +43,7 @@ export default async function Home() {
     <div className="relative h-full w-full">
       <Map data={data} />
       <SearchBar data={data} />
+      <Legend />
     </div>
   );
 }
