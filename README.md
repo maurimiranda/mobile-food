@@ -76,10 +76,10 @@ This app is a map-first React/Next.js experience that fulfills the required sear
 
 - **Testing**:
 
-  - Add E2E tests to cover all functionalities
+  - Increase E2E tests coverage.
   - Add more browsers to Playwright configuration for cross-browser compatibility.
   - Consider unit tests for critical utility functions.
-  - Run tests into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data.
+  - Run tests into a different container to make them independent of the app runtime.
 
 ## How to Run Locally
 
