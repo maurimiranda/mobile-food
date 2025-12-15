@@ -95,7 +95,6 @@ export default function Map({ data }: { data: Permit[] }) {
               if (!locationSearch) {
                 e.originalEvent.stopPropagation();
                 setPopup(permit);
-                setSelectedPermits([permit.id]);
               }
             }}
           >
