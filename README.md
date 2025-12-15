@@ -91,7 +91,7 @@ This app is a map-first React/Next.js experience that fulfills the required sear
 1. Build
 
 ```bash
-make build
+docker compose build --no-cache
 ```
 
 2. Create a `.env` file in the project root with the following content:
@@ -104,7 +104,7 @@ NEXT_PUBLIC_MAPTILER_KEY=your_maptiler_api_key_here
 3. Run Development Server
 
 ```bash
-make run
+docker compose up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser
@@ -116,5 +116,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser
 2. Run E2E Tests
 
 ```bash
-make test
+docker compose exec app npm test
 ```
