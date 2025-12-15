@@ -2,26 +2,20 @@
 
 A web application to explore San Francisco's mobile food facility permits. Built as part of the Radai Food Facilities Challenge (Frontend Focused).
 
-## Problem Description
+## Problem
 
-This application provides an intuitive interface to:
+The Food Facilities Challenge asks for a frontend experience that lets users discover San Francisco mobile food facilities. Core requirements for the frontend track: search by applicant name, search by (partial) street name, optionally filter by permit status, and present the results in a React-based UI. Bonus points include automated tests and implementing the backend-version extras (like nearest vendors) on the client.
 
-1. **Search vendors** by name or the food they serve
-2. **Search by location** using partial street names (e.g., "SAN" finds vendors on "SANSOME ST")
-3. **Filter by permit status** (Approved, Requested, Expired, etc.)
-4. **Discover nearby vendors** by clicking anywhere on the map
+## Solution
 
-## Solution Approach
+This app is a map-first React/Next.js experience that fulfills the required searches and filters while adding geospatial helpers from the backend brief. Users can:
 
-I built an interactive map-based interface rather than a traditional table/list view. This decision was driven by the inherently geographic nature of the data—users looking for food trucks typically care about _where_ they are, not just _what_ they serve.
-
-### Key Features
-
-- **Interactive Map**: web map showing all vendor locations with color-coded status markers
-- **Live Search**: Real-time search across vendor names, addresses, and food items
-- **Location Search**: Click anywhere on the map to find the 5 nearest facilities
-- **Filtering**: Filter by permit status (Approved, Requested, Expired, Suspend, Issued) and facility type (Truck, Cart, Other)
-- **Visual Legend**: Interactive legend with filtering capabilities
+- Search by applicant or partial street/address text with live filtering by permit status.
+- Browse an interactive map with markers styled by status and type.
+- Click a marker to open a popup with permit details.
+- Toggle filters via an interactive legend (status and facility type).
+- Find the 5 nearest vendors to any clicked location (frontend implementation of the backend nearest-feature).
+- Run Playwright E2E tests to verify core user flows.
 
 ## Tech Stack
 
