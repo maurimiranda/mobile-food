@@ -34,7 +34,7 @@ export default function Map({ data }: { data: Permit[] }) {
   }, [data]);
 
   useEffect(() => {
-    if (selectedPermits.length === 0) return;
+    if (!selectedPermits.length) return;
     mapRef.current?.fitBounds(
       bbox(
         featureCollection(
@@ -91,9 +91,15 @@ export default function Map({ data }: { data: Permit[] }) {
             key={permit.id}
             longitude={permit.longitude}
             latitude={permit.latitude}
-            onClick={() => setSelectedPermits([permit.id])}
+            onClick={(e) => {
+              if (!locationSearch) {
+                e.originalEvent.stopPropagation();
+                setPopup(permit);
+                setSelectedPermits([permit.id]);
+              }
+            }}
           >
-            <div onMouseOver={() => setPopup(permit)} onMouseOut={() => setPopup(null)}>
+            <div>
               <div
                 className={`relative ${isSelected ? "ring-4 ring-blue-500 rounded-full p-2 bg-blue-50 shadow-xl" : ""}`}
               >
@@ -115,7 +121,7 @@ export default function Map({ data }: { data: Permit[] }) {
       )}
 
       {popup && (
-        <Popup longitude={popup.longitude} latitude={popup.latitude} closeButton={false}>
+        <Popup longitude={popup.longitude} latitude={popup.latitude} closeButton={false} onClose={() => setPopup(null)}>
           <div className="text-black">
             <p className="font-medium text-sm text-gray-900">{popup.applicant}</p>
             <p className="text-xs text-gray-500">{popup.address}</p>

@@ -68,17 +68,24 @@ I built an interactive map-based interface rather than a traditional table/list 
 
   - Currently fetching directly from SF Gov's API on every page load. A proper backend would provide an API with pagination, filtering, and search capabilities.
 
+- **Data**:
+
+  - Implement caching strategies (e.g., SWR, React Query) to avoid refetching data on every page load.
+  - Add fetch error catching.
+
 - **UI/UX**:
 
   - Clustering: With 400+ markers, the map can feel cluttered at low zoom levels. Marker clustering would improve UX.
   - Mobile Optimization: Further refine the mobile experience for smaller screens.
   - Accessibility: Improve keyboard navigation and screen reader support.
+  - Add global error catchings
 
 - **Testing**:
 
+  - Add E2E tests to cover all functionalities
   - Add more browsers to Playwright configuration for cross-browser compatibility.
   - Consider unit tests for critical utility functions.
-  - Run into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data.
+  - Run tests into a different container to allow app to use server-side data fetching while still enabling E2E tests with fixture data.
 
 ## How to Run Locally
 
