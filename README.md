@@ -65,7 +65,7 @@ This app is a map-first React/Next.js experience that fulfills the required sear
 - **Data**:
 
   - Implement caching strategies (e.g., SWR, React Query) to avoid refetching data on every page load.
-  - Add fetch error catching.
+  - Add better data fetch error handling.
 
 - **UI/UX**:
 

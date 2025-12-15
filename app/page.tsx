@@ -1,5 +1,6 @@
 "use client";
 
+import Error from "@/components/Error";
 import Legend from "@/components/Legend";
 import Loading from "@/components/Loading";
 import Map from "@/components/Map";
@@ -9,14 +10,16 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [data, setData] = useState<Permit[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_DATA_URL!)
       .then((res) => res.json())
       .then((rawData: ApiPermit[]) => {
         // Parse and transform API data into local Permit objects
+        // Filter out permits with invalid coordinates
         const permits: Permit[] = rawData
-          // Filter out permits with invalid coordinates
           .filter((permit) => !(permit.latitude === "0" && permit.longitude === "0"))
           .map((item) => ({
             id: item.objectid,
@@ -42,12 +45,19 @@ export default function Home() {
             expiration: new Date(item.expirationdate),
           }));
         setData(permits);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("Failed to load data.");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
-  if (!data.length) {
-    return <Loading />;
-  }
+  if (error) return <Error message={error} />;
+
+  if (loading) return <Loading />;
 
   return (
     <div className="relative h-full w-full">
