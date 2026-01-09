@@ -1,6 +1,6 @@
 # Mobile Food Permits
 
-A web application to explore San Francisco's mobile food facility permits. Built as part of the Radai Food Facilities Challenge (Frontend Focused).
+A web application to explore San Francisco's mobile food facility permits. Built as part of the Coding Challenge (Frontend Focused).
 
 ## Problem
 
